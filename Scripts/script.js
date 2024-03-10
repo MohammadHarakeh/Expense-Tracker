@@ -69,62 +69,98 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  loadFromLocalStorage();
+
   // Create button functionality
+  function createAndAppendUserInput(amountValue, description) {
+    let userInputDiv = document.createElement("div");
+    let fontIconsDiv = document.createElement("div");
+    let trashIcon = document.createElement("i");
+    let editIcon = document.createElement("i");
+
+    trashIcon.className = "fa-solid fa-trash";
+    editIcon.className = "fa-solid fa-pen-to-square";
+
+    userInputDiv.className = "user-inputs";
+    fontIconsDiv.className = "font-icons-div";
+
+    userInputDiv.innerHTML = `<span>${amountValue.toFixed(
+      2
+    )} USD</span> <span>${description}</span>`;
+
+    userInputContainer.appendChild(userInputDiv);
+    userInputDiv.appendChild(fontIconsDiv);
+    fontIconsDiv.appendChild(trashIcon);
+    fontIconsDiv.appendChild(editIcon);
+
+    trashIcon.addEventListener("click", function () {
+      totalBalanceValue -= amountValue;
+      userInputContainer.removeChild(userInputDiv);
+
+      if (amountValue < 0) {
+        totalExpenseValue -= amountValue;
+        totalExpense.textContent = totalExpenseValue.toFixed(2) + " USD";
+      } else {
+        totalIncomeValue -= amountValue;
+        totalIncome.textContent = totalIncomeValue.toFixed(2) + " USD";
+      }
+      updateTotalBalance();
+      saveToLocalStorage(); // Save to local storage after removing an item
+    });
+
+    if (amountValue < 0) {
+      userInputDiv.style.backgroundColor = "rgb(252, 51, 51)";
+      totalExpenseValue += amountValue;
+      totalExpense.textContent = totalExpenseValue.toFixed(2) + " USD";
+    } else {
+      userInputDiv.style.backgroundColor = "rgb(43, 255, 43)";
+      totalIncomeValue += amountValue;
+      totalIncome.textContent = totalIncomeValue.toFixed(2) + " USD";
+    }
+
+    totalBalanceValue += amountValue;
+    updateTotalBalance();
+  }
+
+  // Your existing create button functionality
   create.addEventListener("click", function () {
     let amountInput = parseFloat(amount.value);
     descriptionInput = document.getElementById("description").value;
 
     if (!isNaN(amountInput) && amountInput !== 0) {
-      let userInputDiv = document.createElement("div");
-      let fontIconsDiv = document.createElement("div");
-      let trashIcon = document.createElement("i");
-      let editIcon = document.createElement("i");
-
-      trashIcon.className = "fa-solid fa-trash";
-      editIcon.className = "fa-solid fa-pen-to-square";
-
-      userInputDiv.className = "user-inputs";
-      fontIconsDiv.className = "font-icons-div";
-
-      userInputDiv.innerHTML =
-        `<span>${amountInput.toFixed(2)} USD</span> ` +
-        `<span>${descriptionInput}</span>`;
-
-      userInputContainer.appendChild(userInputDiv);
-      userInputDiv.appendChild(fontIconsDiv);
-      fontIconsDiv.appendChild(trashIcon);
-      fontIconsDiv.appendChild(editIcon);
-
-      trashIcon.addEventListener("click", function () {
-        totalBalanceValue -= amountInput;
-        userInputContainer.removeChild(userInputDiv);
-
-        if (amountInput < 0) {
-          totalExpenseValue -= amountInput;
-          totalExpense.textContent = totalExpenseValue.toFixed(2) + " USD";
-        } else {
-          totalIncomeValue -= amountInput;
-          totalIncome.textContent = totalIncomeValue.toFixed(2) + " USD";
-        }
-        updateTotalBalance();
-      });
-
-      if (amountInput < 0) {
-        userInputDiv.style.backgroundColor = "rgb(252, 51, 51)";
-        totalExpenseValue += amountInput;
-        totalExpense.textContent = totalExpenseValue.toFixed(2) + " USD";
-      } else {
-        userInputDiv.style.backgroundColor = "rgb(43, 255, 43)";
-        totalIncomeValue += amountInput;
-        totalIncome.textContent = totalIncomeValue.toFixed(2) + " USD";
-      }
-
-      totalBalanceValue += amountInput;
-      updateTotalBalance();
+      createAndAppendUserInput(amountInput, descriptionInput);
+      saveToLocalStorage(); // Save to local storage after adding an item
     } else {
       alert("Please enter a valid amount");
     }
   });
+
+  function saveToLocalStorage() {
+    const userInputs = Array.from(userInputContainer.children).map(function (
+      userInputDiv
+    ) {
+      const amountValue = parseFloat(
+        userInputDiv.textContent.split(" ")[0].replace("USD", "")
+      );
+      const description = userInputDiv.textContent.split(" ")[2];
+      return { amount: amountValue, description: description };
+    });
+
+    localStorage.setItem("userInputs", JSON.stringify(userInputs));
+    console.log("Saving to local storage");
+  }
+
+  // Your existing loadFromLocalStorage function
+  function loadFromLocalStorage() {
+    console.log("Loading from local storage");
+    const storedUserInputs = JSON.parse(localStorage.getItem("userInputs"));
+    if (storedUserInputs) {
+      console.log("Stored data:", storedUserInputs);
+      storedUserInputs.forEach(function (userData) {
+        createAndAppendUserInput(userData.amount, userData.description);
+      });
+    }
+  }
 
   function updateTotalBalance() {
     totalBalance.querySelector("h1").textContent =
