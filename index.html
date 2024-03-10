@@ -22,17 +22,17 @@
     </header>
     <div class="total-balance-wrapper flex-center">
       <div class="total-balance flex-center flex-column" id="total-balance">
-        <p>Total Balance:</p>
+        <p>Total Balance</p>
         <h1></h1>
       </div>
 
       <div class="total-income flex-center flex-column">
-        <p>Total Income:</p>
+        <p>Total Income</p>
         <h1></h1>
       </div>
 
       <div class="total-expense flex-center flex-column">
-        <p>Total Expense:</p>
+        <p>Total Expense</p>
         <h1></h1>
       </div>
     </div>
@@ -41,21 +41,26 @@
       <div class="container-one flex-center">
         <div class="mini-container-one">
           <div class="amount">
-            <label>Amount:</label>
+            <label for="amount">Amount</label>
             <input id="amount" type="number" required />
           </div>
 
+          <div class="description">
+            <label for="description">Description</label>
+            <input id="description" type="text" />
+          </div>
+
           <div class="expense-type">
-            <label for="filter-type">Type:</label>
+            <label for="filter-type">Type</label>
             <select id="filter-type">
-              <option value="">All</option>
+              <option value="all">All</option>
               <option value="income">Income</option>
               <option value="expense">Expense</option>
             </select>
           </div>
 
-          <div class="currecny-type">
-            <label for="filterType">Currency:</label>
+          <div class="currency-type">
+            <label for="filterType">Currency</label>
             <select id="filterType">
               <option value="">All</option>
               <option value="USD">USD</option>
@@ -70,21 +75,13 @@
       </div>
 
       <div class="slider-container flex-center flex-column">
-        <label for="rangeSlider">Select a range:</label>
+        <label for="rangeSlider">Select a range</label>
         <div id="rangeSlider"></div>
         <p id="output"></p>
       </div>
     </div>
 
     <div id="user-inputs-wrapper"></div>
-
-    <!-- <div class="number-container">
-      <p class="number" data-value="10">Number: 10</p>
-      <p class="number" data-value="30">Number: 30</p>
-      <p class="number" data-value="50">Number: 50</p>
-      <p class="number" data-value="70">Number: 70</p>
-      <p class="number" data-value="90">Number: 3000</p>
-    </div> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
   </body>

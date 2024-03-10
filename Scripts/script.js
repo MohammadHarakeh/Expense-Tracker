@@ -7,10 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const totalBalance = document.getElementById("total-balance");
   const totalIncome = document.querySelector(".total-income h1");
   const totalExpense = document.querySelector(".total-expense h1");
+  const filterType = document.getElementById("filter-type");
 
   let totalBalanceValue = 0;
   let totalIncomeValue = 0;
   let totalExpenseValue = 0;
+  let descriptionInput = "";
 
   totalBalance.querySelector("h1").textContent = totalBalanceValue + " USD";
   totalIncome.textContent = totalIncomeValue.toFixed(2) + " USD";
@@ -18,11 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Slider functionality
   noUiSlider.create(rangeSlider, {
-    start: [-5000, 5000],
+    start: [-10000, 10000],
     connect: true,
     range: {
-      min: -5000,
-      max: 5000,
+      min: -10000,
+      max: 10000,
     },
   });
 
@@ -44,9 +46,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  filterType.addEventListener("change", filter);
+
+  function filter() {
+    const selectedFilter = filterType.value;
+
+    Array.from(userInputContainer.children).forEach(function (userInputDiv) {
+      let amountValue = parseInt(
+        userInputDiv.textContent.split(" ")[0].replace("USD", "")
+      );
+
+      // Check the selected filter type and show/hide entries accordingly
+      if (selectedFilter === "income" && amountValue >= 0) {
+        userInputDiv.style.display = "flex";
+      } else if (selectedFilter === "expense" && amountValue < 0) {
+        userInputDiv.style.display = "flex";
+      } else if (selectedFilter === "all") {
+        userInputDiv.style.display = "flex";
+      } else {
+        userInputDiv.style.display = "none";
+      }
+    });
+  }
+
   // Create button functionality
   create.addEventListener("click", function () {
-    let amountInput = parseFloat(amount.value); // Move the initialization here
+    let amountInput = parseFloat(amount.value);
+    descriptionInput = document.getElementById("description").value;
 
     if (!isNaN(amountInput) && amountInput !== 0) {
       let userInputDiv = document.createElement("div");
@@ -60,7 +86,10 @@ document.addEventListener("DOMContentLoaded", function () {
       userInputDiv.className = "user-inputs";
       fontIconsDiv.className = "font-icons-div";
 
-      userInputDiv.textContent = amountInput.toFixed(2) + " USD";
+      userInputDiv.innerHTML =
+        `<span>${amountInput.toFixed(2)} USD</span> ` +
+        `<span>${descriptionInput}</span>`;
+
       userInputContainer.appendChild(userInputDiv);
       userInputDiv.appendChild(fontIconsDiv);
       fontIconsDiv.appendChild(trashIcon);
@@ -97,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Function to update total balance
   function updateTotalBalance() {
     totalBalance.querySelector("h1").textContent =
       totalBalanceValue.toFixed(2) + " USD";
