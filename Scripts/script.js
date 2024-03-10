@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
         userInputDiv.textContent.split(" ")[0].replace("USD", "")
       );
 
-      // Check the selected filter type and show/hide entries accordingly
       if (selectedFilter === "income" && amountValue >= 0) {
         userInputDiv.style.display = "flex";
       } else if (selectedFilter === "expense" && amountValue < 0) {
@@ -71,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   loadFromLocalStorage();
 
-  // Create button functionality
   function createAndAppendUserInput(amountValue, description) {
     let userInputDiv = document.createElement("div");
     let fontIconsDiv = document.createElement("div");
@@ -105,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         totalIncome.textContent = totalIncomeValue.toFixed(2) + " USD";
       }
       updateTotalBalance();
-      saveToLocalStorage(); // Save to local storage after removing an item
+      saveToLocalStorage();
     });
 
     if (amountValue < 0) {
@@ -122,14 +120,13 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTotalBalance();
   }
 
-  // Your existing create button functionality
   create.addEventListener("click", function () {
     let amountInput = parseFloat(amount.value);
     descriptionInput = document.getElementById("description").value;
 
     if (!isNaN(amountInput) && amountInput !== 0) {
       createAndAppendUserInput(amountInput, descriptionInput);
-      saveToLocalStorage(); // Save to local storage after adding an item
+      saveToLocalStorage();
     } else {
       alert("Please enter a valid amount");
     }
@@ -150,7 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Saving to local storage");
   }
 
-  // Your existing loadFromLocalStorage function
   function loadFromLocalStorage() {
     console.log("Loading from local storage");
     const storedUserInputs = JSON.parse(localStorage.getItem("userInputs"));
