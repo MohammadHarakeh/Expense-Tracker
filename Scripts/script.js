@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const numbers = document.querySelectorAll(".number-container p");
   const userInputContainer = document.getElementById("user-inputs-wrapper");
   const create = document.getElementById("create");
+  const amount = document.getElementById("amount");
 
   //slider functionality
 
@@ -34,14 +35,27 @@ document.addEventListener("DOMContentLoaded", function () {
   // Create button functionality
 
   create.addEventListener("click", function () {
-    let newDiv = document.createElement("div");
+    let userInputDiv = document.createElement("div");
+    let fontIconsDiv = document.createElement("div");
     let trashIcon = document.createElement("i");
+    let editIcon = document.createElement("i");
+
+    let amountInput = amount.value;
 
     trashIcon.className = "fa-solid fa-trash";
-    newDiv.className = "user-inputs";
+    editIcon.className = "fa-solid fa-pen-to-square";
 
-    newDiv.textContent = "Testing javascript";
-    userInputContainer.appendChild(newDiv);
-    newDiv.appendChild(trashIcon);
+    userInputDiv.className = "user-inputs";
+    fontIconsDiv.className = "font-icons-div";
+
+    if (amountInput.trim() !== "") {
+      userInputDiv.textContent = amountInput + " USD";
+      userInputContainer.appendChild(userInputDiv);
+      userInputDiv.appendChild(fontIconsDiv);
+      fontIconsDiv.appendChild(trashIcon);
+      fontIconsDiv.appendChild(editIcon);
+    } else {
+      alert("enter an amount");
+    }
   });
 });
