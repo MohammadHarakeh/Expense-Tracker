@@ -9,10 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
   //slider functionality
 
   noUiSlider.create(rangeSlider, {
-    start: [0, 5000],
+    start: [-5000, 5000],
     connect: true,
     range: {
-      min: 0,
+      min: -5000,
       max: 5000,
     },
   });
@@ -22,16 +22,16 @@ document.addEventListener("DOMContentLoaded", function () {
     let maxValue = parseInt(values[1]);
     output.textContent = "Selected range: " + minValue + " to " + maxValue;
 
-    numbers.forEach(function (number) {
-      let value = parseInt(number.getAttribute("data-value"));
-      if (value >= minValue && value <= maxValue) {
-        number.style.display = "block";
+    Array.from(userInputContainer.children).forEach(function (userInputDiv) {
+      let amountValue = parseInt(userInputDiv.textContent.split(" ")[0]);
+
+      if (amountValue >= minValue && amountValue <= maxValue) {
+        userInputDiv.style.display = "flex";
       } else {
-        number.style.display = "none";
+        userInputDiv.style.display = "none";
       }
     });
   });
-
   // Create button functionality
 
   create.addEventListener("click", function () {
@@ -54,8 +54,18 @@ document.addEventListener("DOMContentLoaded", function () {
       userInputDiv.appendChild(fontIconsDiv);
       fontIconsDiv.appendChild(trashIcon);
       fontIconsDiv.appendChild(editIcon);
+
+      trashIcon.addEventListener("click", function () {
+        userInputContainer.removeChild(userInputDiv);
+      });
     } else {
       alert("enter an amount");
+    }
+
+    if (amountInput < 0) {
+      userInputDiv.style.backgroundColor = "red";
+    } else {
+      userInputDiv.style.backgroundColor = "rgb(43, 255, 43)";
     }
   });
 });

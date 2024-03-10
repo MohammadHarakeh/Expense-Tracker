@@ -138,7 +138,6 @@ header {
   padding: 0.5%;
   width: 100%;
   margin: 0.5% auto;
-  background-color: rgb(255, 140, 0);
 }
 
 #user-inputs-wrapper {
@@ -150,7 +149,13 @@ header {
 }
 
 .font-icons-div {
-  width: 4%;
+  width: 6%;
+  font-size: 150%;
   display: flex;
   justify-content: space-between;
+}
+
+.font-icons-div i:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
