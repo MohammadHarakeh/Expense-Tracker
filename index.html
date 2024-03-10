@@ -4,7 +4,88 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/Styles/index.css" />
+    <link rel="stylesheet" href="/Styles/shared.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="/Scripts/script.js"></script>
     <title>Expense Tracker</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>SendFlow</h1>
+    </header>
+    <div class="total-balance-wrapper flex-center">
+      <div class="total-balance flex-center flex-column">
+        <p>Total Balance:</p>
+        <h1>250 USD</h1>
+      </div>
+
+      <div class="total-income flex-center flex-column">
+        <p>Total Income:</p>
+        <h1>250 USD</h1>
+      </div>
+
+      <div class="total-expense flex-center flex-column">
+        <p>Total Expense:</p>
+        <h1>250 USD</h1>
+      </div>
+    </div>
+
+    <div class="balance-tracker-wrapper">
+      <div class="container-one flex-center">
+        <div class="mini-container-one">
+          <div class="amount">
+            <label for="amount">Amount:</label>
+            <input type="number" required />
+          </div>
+
+          <div class="expense-type">
+            <label for="filterType">Type:</label>
+            <select id="filterType">
+              <option value="">All</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+
+          <div class="currecny-type">
+            <label for="filterType">Currency:</label>
+            <select id="filterType">
+              <option value="">All</option>
+              <option value="USD">USD</option>
+              <option value="LBP">LBP</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="create-btn">
+          <a id="create">Create</a>
+        </div>
+      </div>
+
+      <div class="slider-container flex-center flex-column">
+        <label for="rangeSlider">Select a range:</label>
+        <div id="rangeSlider"></div>
+        <p id="output"></p>
+      </div>
+    </div>
+
+    <div id="user-inputs-wrapper"></div>
+
+    <!-- <div class="number-container">
+      <p class="number" data-value="10">Number: 10</p>
+      <p class="number" data-value="30">Number: 30</p>
+      <p class="number" data-value="50">Number: 50</p>
+      <p class="number" data-value="70">Number: 70</p>
+      <p class="number" data-value="90">Number: 3000</p>
+    </div> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+  </body>
 </html>
