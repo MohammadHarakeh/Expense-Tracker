@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const totalIncome = document.querySelector(".total-income h1");
   const totalExpense = document.querySelector(".total-expense h1");
   const filterType = document.getElementById("filter-type");
+  const currencyFilter = document.getElementById("currency-filter");
 
   let totalBalanceValue = 0;
   let totalIncomeValue = 0;
@@ -82,9 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
     userInputDiv.className = "user-inputs";
     fontIconsDiv.className = "font-icons-div";
 
-    userInputDiv.innerHTML = `<span>${amountValue.toFixed(
-      2
-    )} USD</span> <span>${description}</span>`;
+    userInputDiv.innerHTML = `<span>${amountValue.toFixed(2)} ${
+      userData.currency
+    }</span> <span>${description}</span>`;
 
     userInputContainer.appendChild(userInputDiv);
     userInputDiv.appendChild(fontIconsDiv);
@@ -132,6 +133,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  fetch("https://rich-erin-angler-hem.cyclic.app/students/available")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("API Response:", data);
+      currencyDropDown(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching currencies:", error);
+    });
+
+  function currencyDropDown(currencies) {
+    currencyFilter.innerHTML = "";
+
+    const defaultOption = document.createElement("option");
+    defaultOption.text = "Select a currency";
+    currencyFilter.add(defaultOption);
+
+    currencies.forEach((currency) => {
+      const option = document.createElement("option");
+      option.value = currency.code;
+      option.text = currency.name;
+      currencyFilter.add(option);
+    });
+  }
+
   function saveToLocalStorage() {
     const userInputs = Array.from(userInputContainer.children).map(function (
       userInputDiv
@@ -140,20 +166,26 @@ document.addEventListener("DOMContentLoaded", function () {
         userInputDiv.textContent.split(" ")[0].replace("USD", "")
       );
       const description = userInputDiv.textContent.split(" ")[2];
-      return { amount: amountValue, description: description };
+      const currency = userInputDiv.textContent.split(" ")[3];
+      return {
+        amount: amountValue,
+        description: description,
+        currency: currency,
+      };
     });
 
     localStorage.setItem("userInputs", JSON.stringify(userInputs));
-    console.log("Saving to local storage");
   }
 
   function loadFromLocalStorage() {
-    console.log("Loading from local storage");
     const storedUserInputs = JSON.parse(localStorage.getItem("userInputs"));
     if (storedUserInputs) {
-      console.log("Stored data:", storedUserInputs);
       storedUserInputs.forEach(function (userData) {
-        createAndAppendUserInput(userData.amount, userData.description);
+        createAndAppendUserInput(
+          userData.amount,
+          userData.description,
+          userData.currency
+        );
       });
     }
   }
