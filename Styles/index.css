@@ -1,18 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
   background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 100%;
+  overflow: auto;
   background-size: cover;
   background-image: radial-gradient(
-    circle 1224px at 10.6% 8.8%,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(153, 202, 251, 1) 100.2%
+    circle farthest-corner at -4% -12.9%,
+    rgba(74, 98, 110, 1) 0.3%,
+    rgba(30, 33, 48, 1) 90.2%
   );
 }
 
@@ -21,28 +24,45 @@ header {
   align-items: center;
   justify-content: center;
   height: 10vh;
-  background-color: #3498db;
-  color: #fff;
+  background-image: radial-gradient(
+    circle farthest-corner at 1.3% 2.8%,
+    rgba(239, 249, 249, 1) 0%,
+    rgba(182, 199, 226, 1) 100.2%
+  );
 }
 
 .total-balance-wrapper {
   display: flex;
   justify-content: space-around;
-  height: 15vh;
-  width: 80%;
+  height: 20vh;
+  width: 50%;
   background-color: #fff;
-  border: 1px solid #ddd;
+  background-image: radial-gradient(
+    circle farthest-corner at 1.3% 2.8%,
+    rgba(239, 249, 249, 1) 0%,
+    rgba(182, 199, 226, 1) 100.2%
+  );
   border-radius: 10px;
   margin: 20px auto;
   padding: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-grow: 1;
 }
 
 .total-balance {
-  width: 20%;
+  width: 30%;
   padding: 1%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: #00ccff;
+  flex-wrap: wrap;
   border-radius: 10px;
+}
+
+.total-balance h1,
+.total-expense h1,
+.total-income h1 {
+  flex-grow: 1;
 }
 
 .total-balance-wrapper p {
@@ -50,8 +70,26 @@ header {
   color: #737373;
 }
 
+@media (max-width: 1250px) {
+  .total-balance-wrapper {
+    flex-direction: row;
+  }
+
+  .total-balance,
+  .total-expense,
+  .total-income {
+    width: 100%;
+  }
+
+  .total-balance h1,
+  .total-expense h1,
+  .total-income h1 {
+    font-size: 18px; /* Adjust the font size as needed */
+  }
+}
+
 .total-income {
-  width: 20%;
+  width: 30%;
   padding: 1%;
   background-color: #3cff53;
   border-radius: 10px;
@@ -59,7 +97,7 @@ header {
 }
 
 .total-expense {
-  width: 20%;
+  width: 30%;
   padding: 1%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: #ff4848;
@@ -72,11 +110,15 @@ header {
 
 .balance-tracker-wrapper {
   display: flex;
-  width: 80%;
+  width: 50%;
   flex-wrap: wrap;
   margin: 20px auto;
-  background-color: #fff;
-  border: 1px solid #ddd;
+
+  background-image: radial-gradient(
+    circle farthest-corner at 1.3% 2.8%,
+    rgba(239, 249, 249, 1) 0%,
+    rgba(182, 199, 226, 1) 100.2%
+  );
   border-radius: 10px;
   padding: 1%;
 }
@@ -98,6 +140,53 @@ header {
   width: 100%;
 }
 
+.amount,
+.description,
+.expense-type,
+.currency-type {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.filterType {
+  width: 100%;
+  height: 3rem;
+  gap: 1%;
+  padding-top: 2.5%;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+@media (max-width: 1250px) {
+  .mini-container-one {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .currecny-type,
+  .amount,
+  .description,
+  .expense-type,
+  .currency-type {
+    width: 100%;
+  }
+}
+
 .currecny-type {
   width: 100%;
   height: 3rem;
@@ -109,7 +198,7 @@ header {
   font-size: 130%;
   border: 1px solid black;
   background-color: rgb(93, 223, 255);
-  padding: 10%;
+  padding: 10% 6%;
   margin: 10%;
   border-radius: 5px;
   cursor: pointer;
@@ -158,10 +247,12 @@ button:hover {
 }
 
 .slider-container {
-  flex: 1;
   margin-left: 20px;
-  flex-basis: 100%;
   margin-top: 20px;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
 
 #rangeSlider {
@@ -169,8 +260,6 @@ button:hover {
 }
 
 .user-inputs {
-  background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
   margin: 10px auto;
@@ -180,9 +269,15 @@ button:hover {
 
 #user-inputs-wrapper {
   background-color: #fff;
-  border: 1px solid #ddd;
+  background-image: radial-gradient(
+    circle farthest-corner at 1.3% 2.8%,
+    rgba(239, 249, 249, 1) 0%,
+    rgba(182, 199, 226, 1) 100.2%
+  );
   border-radius: 10px;
   padding: 10px;
-  width: 80%;
+  width: 50%;
   margin: 20px auto;
+  max-height: 60vh;
+  overflow-y: auto;
 }
